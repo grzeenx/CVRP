@@ -32,8 +32,8 @@ class Graph:
         self.depot_index = int(lines_from_file[9 + 2 * self.dimension])
 
     def __str__(self):
-        returned_string = f"{self.name}: capacity = {self.capacity}\n"
-        returned_string += str(self.edges) + '\n'
+        returned_string = str(self.edges) + '\n'
+        returned_string += f"{self.name}: dimension = {self.dimension}, capacity = {self.capacity}\n"
         returned_string += "Demands: " + str(self.demands) + '\n'
         returned_string += f"Depot vertex: {self.depot_index}"
         return returned_string
