@@ -40,7 +40,10 @@ class Ant:
             coefficients.append(value)
 
         sum_of_coefficients = sum(coefficients)
-        probabilities = list(map(lambda x: x / sum_of_coefficients, coefficients))
+        if sum_of_coefficients!=0:
+            probabilities = list(map(lambda x: x / sum_of_coefficients, coefficients))
+        else:
+            probabilities = list(map(lambda x:x, coefficients))
         probabilities_normalized = []
         sum_of_probabilities = 0
         for probability in probabilities:
@@ -78,7 +81,7 @@ class Ant:
 
 
 class StandardAntAlgorithm:
-    def __init__(self, graph, ants_count, max_iterations=5, alpha=1, beta=1, rho=0):
+    def __init__(self, graph, ants_count, max_iterations=50, alpha=1, beta=1, rho=0):
         self.max_iterations = max_iterations
         self.ants_count = ants_count
         self.alpha = alpha
@@ -95,6 +98,7 @@ class StandardAntAlgorithm:
         for i in range(self.max_iterations):
             self.perform_iteration_for_all_ants()
             self.ants = [Ant(self.graph, self.pheromones, self.alpha, self.beta)] * self.ants_count
+        return self.best_route, self.best_cost
 
     def perform_iteration_for_all_ants(self):
         new_pheromones = np.zeros((self.graph.dimension, self.graph.dimension))

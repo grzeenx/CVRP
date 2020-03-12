@@ -11,6 +11,6 @@ g = Graph.load_graph("E-n22-k4.txt", dataset_path)
 # result = greedy_1.greedy()
 # print(result)
 
-standard_as1 = StandardAntAlgorithm(g, 3)
+standard_as1 = StandardAntAlgorithm(g, 100, max_iterations=300, rho=0)
 result = standard_as1.execute()
 print(result)
