@@ -17,7 +17,6 @@ class GreedyAlgorithm:
 
         while True in self.active_vertices:
             vertices_to_visit = self.get_vertices()
-            print(self.active_vertices)
             if vertices_to_visit == []:
                 self.go_to(self.graph.depot_index)
             else:
@@ -29,7 +28,7 @@ class GreedyAlgorithm:
 
     def find_closest(self, vertices_to_visit):
         distances = [ self.graph.edges[self.current_vertex, i] for i in vertices_to_visit ]
-        return np.argmin(distances)
+        return vertices_to_visit[np.argmin(distances)]
 
 
     def go_to(self, index):
@@ -38,8 +37,8 @@ class GreedyAlgorithm:
             self.cycles.append([])
         else:
             self.capacity_left -= self.graph.demands[index]
-        self.current_vertex = index
         self.cost += self.graph.edges[self.current_vertex, index]
+        self.current_vertex = index
         self.cycles[-1].append(self.current_vertex)
         self.active_vertices[index]=False
 
