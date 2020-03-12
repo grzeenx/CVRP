@@ -13,14 +13,14 @@ greedy_1 = GreedyAlgorithm(g)
 result = greedy_1.greedy()
 print(result)
 
-standard_as1 = StandardAntAlgorithm(g, 50, max_iterations=300, rho=0)
+standard_as1 = StandardAntAlgorithm(g, 100, max_iterations=1000, rho=0)
 result = standard_as1.execute()
 print(result)
 
-standard_as1 = ElitistAntAlgorithm(g, 50, max_iterations=300, rho=0)
+standard_as1 = ElitistAntAlgorithm(g, 100, max_iterations=1000, rho=0)
 result = standard_as1.execute()
 print(result)
 
-standard_as1 = RankAntAlgorithm(g, 50, chosen_ants_count=15, max_iterations=300, rho=0)
+standard_as1 = RankAntAlgorithm(g, 100, chosen_ants_count=10, max_iterations=1000, rho=0)
 result = standard_as1.execute()
 print(result)
