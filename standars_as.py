@@ -98,6 +98,7 @@ class StandardAntAlgorithm:
         for i in range(self.max_iterations):
             self.perform_iteration_for_all_ants()
             self.initialize_ants()
+        self.best_cost += self.graph.edges[self.best_route[-1][-1], self.graph.depot_index]
         return self.best_route, self.best_cost
 
     def perform_iteration_for_all_ants(self):

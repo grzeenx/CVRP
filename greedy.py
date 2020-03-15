@@ -12,7 +12,6 @@ class GreedyAlgorithm:
         self.capacity_left = self.capacity
 
     def greedy(self):
-
         while True in self.active_vertices:
             vertices_to_visit = self.get_vertices()
             if vertices_to_visit == []:
@@ -20,7 +19,7 @@ class GreedyAlgorithm:
             else:
                 vertex_index = self.find_closest(vertices_to_visit)
                 self.go_to(vertex_index)
-
+        self.cost += self.graph.edges[self.current_vertex, self.graph.depot_index]
         return self.cycles, self.cost
 
     def find_closest(self, vertices_to_visit):
