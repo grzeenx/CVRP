@@ -9,7 +9,7 @@ class ElitistAntAlgorithm(StandardAntAlgorithm):
         self.best_ant_count = 0
 
     def perform_iteration_for_all_ants(self):
-        new_pheromones = np.zeros((self.graph.dimension, self.graph.dimension))
+        new_pheromones = np.ones((self.graph.dimension, self.graph.dimension))
         for ant in self.ants:
             route, cost = ant.perform_iteration()
             self.add_pheromones(new_pheromones, cost, route)
