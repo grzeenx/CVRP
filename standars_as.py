@@ -14,7 +14,7 @@ class Ant:
         self.beta = beta
         self.current_vertex = self.graph.depot_index
         self.cost = 0
-        self.cycles = [[]]
+        self.cycles = [[self.graph.depot_index]]
         self.capacity = self.graph.capacity
         self.active_vertices = [False] + [True] * (self.graph.dimension - 1)
         self.capacity_left = self.capacity

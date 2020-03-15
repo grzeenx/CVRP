@@ -8,7 +8,7 @@ class GreedyAlgorithm:
         self.capacity = self.graph.capacity
         self.current_vertex = self.graph.depot_index
         self.cost = 0
-        self.cycles = [[]]
+        self.cycles = [[self.graph.depot_index]]
         # zakladamy ze depot to wierzcholek 0
         self.active_vertices = [False] + [True] * (self.graph.dimension - 1)
         self.capacity_left = self.capacity
