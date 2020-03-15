@@ -11,10 +11,7 @@ class RankAntAlgorithm(StandardAntAlgorithm):
 
     def perform_iteration_for_all_ants(self):
         for ant in self.ants:
-            # print("I am an ant!")
-            # print(self.ants)
             route, cost = ant.perform_iteration()
-            # print(f"   {cost},{route}")
             if cost < self.best_costs_and_routes[-1][0]:
                 if len(self.best_costs_and_routes) < self.chosen_ants_count:
                     self.best_costs_and_routes.append((cost, route))
@@ -27,10 +24,6 @@ class RankAntAlgorithm(StandardAntAlgorithm):
             self.best_cost = self.best_costs_and_routes[0][0]
             self.best_route = self.best_costs_and_routes[0][1]
 
-        # for adsdasd in self.best_costs_and_routes:
-        #     print(adsdasd)
-        # print(f"best: {self.best_cost}")
-        # print('\n\n')
         self.best_costs_and_routes = [(math.inf, [[]])]
 
     def place_best_pheromones(self):
@@ -42,5 +35,3 @@ class RankAntAlgorithm(StandardAntAlgorithm):
                     self.pheromones[vertex_to, vertex_from] += value_to_add
                 self.pheromones[cycle[-1], cycle[0]] += value_to_add
                 self.pheromones[cycle[0], cycle[-1]] += value_to_add
-        # with np.printoptions(precision=3, suppress=True, linewidth=175):
-        #     print(self.pheromones)

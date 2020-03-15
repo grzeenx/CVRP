@@ -1,4 +1,3 @@
-from Graph import Graph
 import numpy as np
 
 
@@ -9,7 +8,6 @@ class GreedyAlgorithm:
         self.current_vertex = self.graph.depot_index
         self.cost = 0
         self.cycles = [[self.graph.depot_index]]
-        # zakladamy ze depot to wierzcholek 0
         self.active_vertices = [False] + [True] * (self.graph.dimension - 1)
         self.capacity_left = self.capacity
 
@@ -26,7 +24,7 @@ class GreedyAlgorithm:
         return self.cycles, self.cost
 
     def find_closest(self, vertices_to_visit):
-        distances = [ self.graph.edges[self.current_vertex, i] for i in vertices_to_visit ]
+        distances = [self.graph.edges[self.current_vertex, i] for i in vertices_to_visit]
         return vertices_to_visit[np.argmin(distances)]
 
     def go_to(self, index):
@@ -42,11 +40,8 @@ class GreedyAlgorithm:
 
     def get_vertices(self):
         vertices = []
-        # if it is active
         for i in range(len(self.active_vertices)):
             if self.active_vertices[i]:
-                # if it is possible to fullfil
                 if self.graph.demands[i] <= self.capacity_left:
                     vertices.append(i)
-        # list of indeces that the truck can go
         return vertices

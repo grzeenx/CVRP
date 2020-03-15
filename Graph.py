@@ -1,6 +1,7 @@
 import numpy as np
 from math import sqrt, pow
-import  os
+import os
+
 
 class Graph:
     def __init__(self, lines_from_file):
@@ -25,7 +26,7 @@ class Graph:
                     pow(coordinates1[0] - coordinates2[0], 2) + pow(coordinates1[1] - coordinates2[1], 2))
         for line in lines_from_file[8 + self.dimension: 8 + 2 * self.dimension]:
             self.demands.append(int(line.split(' ')[1]))
-        self.depot_index = int(lines_from_file[9 + 2 * self.dimension]) -1
+        self.depot_index = int(lines_from_file[9 + 2 * self.dimension]) - 1
 
     def __str__(self):
         returned_string = str(self.edges) + '\n'
@@ -34,13 +35,10 @@ class Graph:
         returned_string += f"Depot vertex: {self.depot_index}"
         return returned_string
 
-
-
     @staticmethod
     def load_graph(filename, dataset_path):
         path = os.path.join(dataset_path, filename)
         with open(path, 'r') as file:
             lines = list(map(str.strip, file.readlines()))
         g = Graph(lines)
-        # print(g)
         return g

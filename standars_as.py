@@ -1,9 +1,6 @@
-from Graph import Graph
 import numpy as np
 import math
 import random
-
-# random.seed(123)
 
 
 class Ant:
@@ -22,20 +19,16 @@ class Ant:
     def perform_iteration(self):
         while True in self.active_vertices:
             vertices_to_visit = self.get_vertices()
-            # print(self.active_vertices)
             if not vertices_to_visit:
                 self.go_to(self.graph.depot_index)
             else:
                 vertex_index = self.roulette_choose(vertices_to_visit)
                 self.go_to(vertex_index)
-        # self.active_vertices = [False] + [True] * (self.graph.dimension - 1)
-        # print('------')
         return self.cycles, self.cost
 
     def roulette_choose(self, vertices_to_visit):
         distances = [self.graph.edges[self.current_vertex, i] for i in vertices_to_visit]
         pheromones = [self.pheromones[self.current_vertex, i] for i in vertices_to_visit]
-        # print(distances)
         coefficients = []
 
         for i, vertex in enumerate(vertices_to_visit):
@@ -43,10 +36,10 @@ class Ant:
             coefficients.append(value)
 
         sum_of_coefficients = sum(coefficients)
-        if sum_of_coefficients!=0:
+        if sum_of_coefficients != 0:
             probabilities = list(map(lambda x: x / sum_of_coefficients, coefficients))
         else:
-            probabilities = list(map(lambda x:x, coefficients))
+            probabilities = list(map(lambda x: x, coefficients))
         probabilities_normalized = []
         sum_of_probabilities = 0
         for probability in probabilities:
@@ -59,16 +52,6 @@ class Ant:
             if prob1 <= random_number < prob2:
                 break
             which_range += 1
-        # print(f"coefficients: {coefficients}")
-        # print(f"sum of coefficients: {sum_of_coefficients}")
-        # print(f"probabilities: {probabilities}")
-        # print(f"sum of probabilities: {sum_of_probabilities}")
-        # print(f"probabilities normalized: {probabilities_normalized}")
-        # print(f"random: {random_number}")
-        # print(f"which range: {which_range}")
-        # print(f"vertices_to_visit: {vertices_to_visit}, len: {len(vertices_to_visit)}")
-        # print(f"chosen vertex: {vertices_to_visit[which_range]}")
-        # print('\n')
         return vertices_to_visit[which_range]
 
     def go_to(self, index):
@@ -84,13 +67,10 @@ class Ant:
 
     def get_vertices(self):
         vertices = []
-        # if it is active
         for i in range(len(self.active_vertices)):
             if self.active_vertices[i]:
-                # if it is possible to fullfil
                 if self.graph.demands[i] <= self.capacity_left:
                     vertices.append(i)
-        # list of indeces that the truck can go
         return vertices
 
 
@@ -113,27 +93,21 @@ class StandardAntAlgorithm:
         self.ants = []
         for i in range(self.ants_count):
             self.ants.append(Ant(self.graph, self.pheromones, self.alpha, self.beta))
-            # print(self.ants[-1].active_vertices)
-            # print(f" {id(self.ants[-1])}, {self.ants[-1]}")
 
     def execute(self):
         for i in range(self.max_iterations):
             self.perform_iteration_for_all_ants()
             self.initialize_ants()
-            # print(f'best cost: {self.best_cost}')
         return self.best_route, self.best_cost
 
     def perform_iteration_for_all_ants(self):
         new_pheromones = np.ones((self.graph.dimension, self.graph.dimension))
         for ant in self.ants:
-            # print(f"I'm an ant! ID: {id(ant)}")
-            # print(ant.active_vertices)
             route, cost = ant.perform_iteration()
             self.add_pheromones(new_pheromones, cost, route)
             if cost < self.best_cost:
                 self.best_cost = cost
                 self.best_route = route
-            # print(ant.active_vertices)
         self.evaporate_pheromones()
         self.place_pheromones(new_pheromones)
 

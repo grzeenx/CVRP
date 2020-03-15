@@ -27,7 +27,7 @@ pretty_print(result)
 standard_as1 = StandardAntAlgorithm(g, 30, max_iterations=500, rho=0)
 result = standard_as1.execute()
 pretty_print(result)
-#
+
 standard_as1 = ElitistAntAlgorithm(g, 30, max_iterations=500, rho=0)
 result = standard_as1.execute()
 pretty_print(result)
