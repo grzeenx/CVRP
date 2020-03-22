@@ -1,4 +1,5 @@
-from random import shuffle, random
+from random import shuffle, random, seed
+
 
 
 class Particle:
@@ -75,7 +76,7 @@ class Particle:
 
 
 class Pso_Algorithm:
-    def __init__(self, graph, alpha=0.85, beta=0.85, gamma=0, particle_count=10, max_iterations=10):
+    def __init__(self, graph, alpha=0.85, beta=0.85, gamma=0, particle_count=10, max_iterations=10, exp_seed = 777):
         '''
         Class that realises PSO algorithm.
         :param graph:
@@ -85,6 +86,7 @@ class Pso_Algorithm:
         :param particle_count: how many particles in the algorithm
         :param max_iterations: how many iterations
         '''
+        seed(exp_seed)
         self.graph = graph
         self.particle_count = particle_count
         self.alpha = alpha
@@ -103,10 +105,10 @@ class Pso_Algorithm:
     def execute(self):
         for i in range(self.max_iterations):
             self.perform_iteration_for_all_particles()
-            print(f"{i} {self.gbest_cost}")
-            for particle in self.particles:
-                print(particle.pbest_cost, end=" ")
-            print(" ")
+            # print(f"{i} {self.gbest_cost}")
+            # for particle in self.particles:
+            #     print(particle.pbest_cost, end=" ")
+            # print(" ")
         _, route_with_zeroes =count_cost(self.gbest, self.graph)
         return route_with_zeroes, self.gbest_cost
 
@@ -150,8 +152,9 @@ def count_cost(route, graph):
             route_with_zeroes[-1].append(graph.depot_index)
             route_with_zeroes[-1].append(vertex)
             current_cost += graph.edges[current_vertex, graph.depot_index] + graph.edges[graph.depot_index, vertex]
-            current_load = 0
+            current_load = demand
             current_vertex = vertex
 
+    current_cost+=graph.edges[current_vertex, graph.depot_index]
     return current_cost, route_with_zeroes
 

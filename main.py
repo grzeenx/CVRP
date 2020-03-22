@@ -21,12 +21,19 @@ def pretty_print(_result):
 def check_sum(_result):
     route = _result[0]
     sum = 0
+    load= 0
+    max_load = g.capacity
     for cycle in route:
         for vertex_before, vertex_after in zip(cycle, cycle[1:]):
             sum += g.edges[vertex_before, vertex_after]
             print(f"Vertices {vertex_before + 1}-{vertex_after + 1} add to sum {g.edges[vertex_before, vertex_after]}")
+            load+=g.demands[vertex_after]
+            if load > max_load:
+                print("too much load!", load)
+        load=0
         sum += g.edges[cycle[-1], cycle[0]]
         print(f"Vertices {cycle[-1] + 1}-{cycle[0] + 1} add to sum {g.edges[cycle[-1], cycle[0]]}")
+
     print(f"Sum checked: {sum}\n")
 
 
@@ -53,10 +60,19 @@ g = Graph.load_graph("E-n22-k4.txt", dataset_path)
 # pretty_print(result)
 # # check_sum(result)
 
+for i in range(111, 1000, 42):
+    pso_1= Pso_Algorithm(g, alpha=0.55, beta=0.85, gamma=0.5, particle_count=2000, max_iterations=50,exp_seed=i)
+    result = pso_1.execute()
+    pretty_print(result)
+    # check_sum(result)
 
-pso_1= Pso_Algorithm(g, alpha=0.6, beta=0.85, gamma=0.5, particle_count=100, max_iterations=100)
-result = pso_1.execute()
-pretty_print(result)
-# check_sum(result)
+
+
+
+
+
+
+
+
 
 
