@@ -2,6 +2,10 @@ from greedy import GreedyAlgorithm
 import random
 
 class Random_algorithm(GreedyAlgorithm):
+    def __init__(self, graph,exp_seed=777):
+        super().__init__(graph)
+        random.seed(exp_seed)
+
     def find_closest(self, vertices_to_visit):
         '''
         Randomly

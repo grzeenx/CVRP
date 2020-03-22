@@ -59,7 +59,7 @@ result = greedy_1.greedy()
 pretty_print(result)
 # check_sum(result)
 
-random_1 = Random_algorithm(g)
+random_1 = Random_algorithm(g,exp_seed)
 result = random_1.greedy()
 pretty_print(result)
 
