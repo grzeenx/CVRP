@@ -11,7 +11,8 @@ class Particle:
         self.beta = beta
         self.gamma = gamma
         self.graph = graph
-        vertices = shuffle([i for i in range(self.graph.dimension) if i != depot_id])
+        vertices = [i for i in range(self.graph.dimension) if i != depot_id]
+        shuffle(vertices)
         # x, current location, current solving route(without zeroes)
         self.route_without_base = vertices
         # global best - without zeroes
@@ -89,7 +90,8 @@ class Pso_Algorithm:
         self.alpha = alpha
         self.beta = beta
         self.gamma = gamma
-        self.gbest = shuffle([i for i in range(self.graph.dimension) if i != self.graph.depot_index])
+        self.gbest = [i for i in range(self.graph.dimension) if i != self.graph.depot_index]
+        shuffle(self.gbest)
         self.gbest_cost = count_cost(self.gbest, self.graph)
         self.particles = [
             Particle(self.graph, self.gbest, self.gbest_cost, self.alpha, self.beta, self.gamma, self.graph.depot_index)
@@ -101,6 +103,8 @@ class Pso_Algorithm:
     def execute(self):
         for i in range(self.max_iterations):
             self.perform_iteration_for_all_particles()
+        _, route_with_zeroes =count_cost(self.gbest, self.graph)
+        return route_with_zeroes, self.gbest_cost
 
     def perform_iteration_for_all_particles(self):
         gbest_changed = False
@@ -130,21 +134,20 @@ def count_cost(route, graph):
     route_with_zeroes = [[current_vertex]]
 
     for vertex in route:
-        distance= graph.edges[current_vertex, vertex]
+        distance = graph.edges[current_vertex, vertex]
         demand = graph.demands[vertex]
         if current_load + demand <= max_load:
             route_with_zeroes[-1].append(vertex)
-            current_cost+=distance
-            current_load+=demand
-            current_vertex= vertex
+            current_cost += distance
+            current_load += demand
+            current_vertex = vertex
         else:
             route_with_zeroes.append([])
             route_with_zeroes[-1].append(graph.depot_index)
             route_with_zeroes[-1].append(vertex)
-            current_cost += graph.edges[current_vertex,graph.depot_index] + graph.edges[graph.depot_index, vertex]
+            current_cost += graph.edges[current_vertex, graph.depot_index] + graph.edges[graph.depot_index, vertex]
             current_load = 0
             current_vertex = vertex
-
 
     return current_cost, route_with_zeroes
 

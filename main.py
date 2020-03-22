@@ -5,6 +5,7 @@ from greedy import GreedyAlgorithm
 from standars_as import StandardAntAlgorithm
 from elitist import ElitistAntAlgorithm
 from rank import RankAntAlgorithm
+from pso import Pso_Algorithm
 
 
 def pretty_print(_result):
@@ -32,22 +33,30 @@ def check_sum(_result):
 dataset_path = os.path.join(pathlib.Path().absolute(), "dataset")
 g = Graph.load_graph("E-n22-k4.txt", dataset_path)
 
-greedy_1 = GreedyAlgorithm(g)
-result = greedy_1.greedy()
+# greedy_1 = GreedyAlgorithm(g)
+# result = greedy_1.greedy()
+# pretty_print(result)
+# # check_sum(result)
+#
+# standard_as1 = StandardAntAlgorithm(g, 30, max_iterations=500, rho=0)
+# result = standard_as1.execute()
+# pretty_print(result)
+# # check_sum(result)
+#
+# standard_as1 = ElitistAntAlgorithm(g, 30, max_iterations=500, rho=0)
+# result = standard_as1.execute()
+# pretty_print(result)
+# # check_sum(result)
+#
+# standard_as1 = RankAntAlgorithm(g, 30, chosen_ants_count=10, max_iterations=500, rho=0)
+# result = standard_as1.execute()
+# pretty_print(result)
+# # check_sum(result)
+
+
+pso_1= Pso_Algorithm(g)
+result = pso_1.execute()
 pretty_print(result)
 # check_sum(result)
 
-standard_as1 = StandardAntAlgorithm(g, 30, max_iterations=500, rho=0)
-result = standard_as1.execute()
-pretty_print(result)
-# check_sum(result)
 
-standard_as1 = ElitistAntAlgorithm(g, 30, max_iterations=500, rho=0)
-result = standard_as1.execute()
-pretty_print(result)
-# check_sum(result)
-
-standard_as1 = RankAntAlgorithm(g, 30, chosen_ants_count=10, max_iterations=500, rho=0)
-result = standard_as1.execute()
-pretty_print(result)
-# check_sum(result)
