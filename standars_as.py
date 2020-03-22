@@ -75,7 +75,8 @@ class Ant:
 
 
 class StandardAntAlgorithm:
-    def __init__(self, graph, ants_count, max_iterations=50, alpha=1, beta=1, rho=0):
+    def __init__(self, graph, ants_count, max_iterations=50, alpha=1, beta=1, rho=0, exp_seed=777):
+        random.seed(exp_seed)
         self.max_iterations = max_iterations
         self.ants_count = ants_count
         self.alpha = alpha

@@ -3,9 +3,9 @@ import numpy as np
 
 
 class ElitistAntAlgorithm(StandardAntAlgorithm):
-    def __init__(self, graph, ants_count, max_iterations=50, alpha=1, beta=1, rho=0):
+    def __init__(self, graph, ants_count, max_iterations=50, alpha=1, beta=1, rho=0, exp_seed=777):
 
-        super().__init__(graph, ants_count, max_iterations, alpha, beta, rho)
+        super().__init__(graph, ants_count, max_iterations, alpha, beta, rho,exp_seed=exp_seed)
         self.best_ant_count = 0
 
     def perform_iteration_for_all_ants(self):
