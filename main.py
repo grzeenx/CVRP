@@ -54,7 +54,7 @@ g = Graph.load_graph("E-n22-k4.txt", dataset_path)
 # # check_sum(result)
 
 
-pso_1= Pso_Algorithm(g)
+pso_1= Pso_Algorithm(g, alpha=0.85, beta=0.85, gamma=0.5, particle_count=100, max_iterations=100)
 result = pso_1.execute()
 pretty_print(result)
 # check_sum(result)

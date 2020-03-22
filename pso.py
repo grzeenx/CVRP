@@ -21,7 +21,7 @@ class Particle:
 
         # personal best - without zeroes
         self.pbest = vertices.copy()
-        self.pbest_cost = count_cost(self.pbest, self.graph)
+        self.pbest_cost = count_cost(self.pbest, self.graph)[0]
 
         # sequence of swaps
         self.velocity = []
@@ -67,7 +67,7 @@ class Particle:
         if random() >= self.beta:
             self.velocity += self.find_sequence(self.route_without_base, self.gbest)
         self.do_swaps()
-        cost = count_cost(self.route_without_base, self.graph)
+        cost = count_cost(self.route_without_base, self.graph)[0]
         if cost > self.pbest_cost:
             self.pbest = self.route_without_base
             self.pbest_cost = cost
@@ -92,7 +92,7 @@ class Pso_Algorithm:
         self.gamma = gamma
         self.gbest = [i for i in range(self.graph.dimension) if i != self.graph.depot_index]
         shuffle(self.gbest)
-        self.gbest_cost = count_cost(self.gbest, self.graph)
+        self.gbest_cost = count_cost(self.gbest, self.graph)[0]
         self.particles = [
             Particle(self.graph, self.gbest, self.gbest_cost, self.alpha, self.beta, self.gamma, self.graph.depot_index)
             for i
@@ -103,6 +103,7 @@ class Pso_Algorithm:
     def execute(self):
         for i in range(self.max_iterations):
             self.perform_iteration_for_all_particles()
+            # print(f"{i} {self.gbest_cost}")
         _, route_with_zeroes =count_cost(self.gbest, self.graph)
         return route_with_zeroes, self.gbest_cost
 
