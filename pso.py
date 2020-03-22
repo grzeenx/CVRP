@@ -68,7 +68,7 @@ class Particle:
             self.velocity += self.find_sequence(self.route_without_base, self.gbest)
         self.do_swaps()
         cost = count_cost(self.route_without_base, self.graph)[0]
-        if cost > self.pbest_cost:
+        if cost < self.pbest_cost:
             self.pbest = self.route_without_base
             self.pbest_cost = cost
         return cost, self.route_without_base
@@ -103,7 +103,10 @@ class Pso_Algorithm:
     def execute(self):
         for i in range(self.max_iterations):
             self.perform_iteration_for_all_particles()
-            # print(f"{i} {self.gbest_cost}")
+            print(f"{i} {self.gbest_cost}")
+            for particle in self.particles:
+                print(particle.pbest_cost, end=" ")
+            print(" ")
         _, route_with_zeroes =count_cost(self.gbest, self.graph)
         return route_with_zeroes, self.gbest_cost
 
@@ -152,8 +155,3 @@ def count_cost(route, graph):
 
     return current_cost, route_with_zeroes
 
-#
-# pa=Pso_Algorithm(0)
-# pa.find_sequence([1,2,3],[2,1,3])
-# pa.find_sequence([4,1],[4,1])
-# pa.find_sequence([1,2,3,4],[2,3,1,4])
