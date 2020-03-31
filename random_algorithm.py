@@ -13,5 +13,4 @@ class Random_algorithm(GreedyAlgorithm):
         :return:
         '''
         n= len(vertices_to_visit)
-
         return vertices_to_visit[random.randint(0,n-1)]
