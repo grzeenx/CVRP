@@ -32,7 +32,7 @@ class Test:
             for vertex in cycle:
                 vertices_as_text += f"{vertex + 1} "
             print(f"Route #{i + 1}: {vertices_as_text}")
-        print(f"Cost {cost}\n")
+        print(f"Cost\t{cost}\n")
 
     def check_sum(self, _result):
         route = _result[0]
@@ -56,30 +56,36 @@ class Test:
     def run(self, print_iterations=False):
         greedy_1 = GreedyAlgorithm(self.graph)
         result = greedy_1.greedy()
+        print("==========GREEDY ALGORITHM==========")
         self.pretty_print(result)
 
         random_1 = Random_algorithm(self.graph, self.exp_seed)
         result = random_1.greedy()
+        print("==========RANDOM ALGORITHM==========")
         self.pretty_print(result)
 
         standard_as1 = StandardAntAlgorithm(self.graph, self.ant_count, max_iterations=self.max_iterations,
                                             rho=self.rho, exp_seed=self.exp_seed, alpha=self.alpha_ant,
                                             beta=self.beta_ant)
         result = standard_as1.execute()
+        print("==========ORIGINAL ANT COLONY OPTIMIZATION==========")
         self.pretty_print(result)
 
         elitist_as1 = ElitistAntAlgorithm(self.graph, self.ant_count, max_iterations=self.max_iterations, rho=self.rho,
                                           exp_seed=self.exp_seed, alpha=self.alpha_ant, beta=self.beta_ant)
         result = elitist_as1.execute()
+        print("==========ELITIST ANT COLONY OPTIMIZATION==========")
         self.pretty_print(result)
 
         rank_as1 = RankAntAlgorithm(self.graph, self.ant_count, chosen_ants_count=self.chosen_ants_count,
                                     max_iterations=self.max_iterations, rho=self.rho, exp_seed=self.exp_seed,
                                     alpha=self.alpha_ant, beta=self.beta_ant)
         result = rank_as1.execute()
+        print("==========RANK ANT COLONY OPTIMIZATION==========")
         self.pretty_print(result)
 
         pso_1 = Pso_Algorithm(self.graph, alpha=self.alpha, beta=self.beta, gamma=self.gamma,
                               particle_count=self.ant_count, max_iterations=self.max_iterations, exp_seed=self.exp_seed)
         result = pso_1.execute()
+        print("==========PARTICLE SWARM OPTIMIZATION==========")
         self.pretty_print(result)
