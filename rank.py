@@ -23,7 +23,6 @@ class RankAntAlgorithm(StandardAntAlgorithm):
         if self.best_costs_and_routes[0][0] < self.best_cost:
             self.best_cost = self.best_costs_and_routes[0][0]
             self.best_route = self.best_costs_and_routes[0][1]
-
         self.best_costs_and_routes = [(math.inf, [[]])]
 
     def place_best_pheromones(self):
