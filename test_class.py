@@ -62,7 +62,10 @@ class Test:
                                     quotechar='|', quoting=csv.QUOTE_MINIMAL)
             row=[self.max_iterations, self.ant_count, self.alpha_ant, self.beta_ant]
             for result in self.results:
-                row.append(result.__str__())
+                if result=='':
+                    row.append(result)
+                else:
+                    row.append(result[1])
             csv_writer.writerow(row)
 
     def run(self, algorithms, path=None, print_iterations=False):

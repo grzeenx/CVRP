@@ -1,1 +1,0 @@
-it ant_count alpha_ant beta_ant greedy random standard rank elit pso
