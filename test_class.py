@@ -60,9 +60,9 @@ class Test:
         with open(self.path_to_csv, 'a', newline='') as csvfile:
             csv_writer = csv.writer(csvfile, delimiter=',',
                                     quotechar='|', quoting=csv.QUOTE_MINIMAL)
-            row=[self.max_iterations, self.ant_count, self.alpha_ant, self.beta_ant]
+            row = [self.max_iterations, self.ant_count, self.alpha_ant, self.beta_ant]
             for result in self.results:
-                if result=='':
+                if result == '':
                     row.append(result)
                 else:
                     row.append(result[1])
@@ -82,44 +82,44 @@ class Test:
         if "greedy" in algorithms:
             greedy_1 = GreedyAlgorithm(self.graph)
             self.results[0] = greedy_1.greedy()
-            print("==========GREEDY ALGORITHM==========")
-            self.pretty_print(self.results[0])
+            # print("==========GREEDY ALGORITHM==========")
+            # self.pretty_print(self.results[0])
 
         if "random" in algorithms:
             random_1 = Random_algorithm(self.graph, self.exp_seed)
             self.results[1] = random_1.greedy()
-            print("==========RANDOM ALGORITHM==========")
-            self.pretty_print(self.results[1])
+            # print("==========RANDOM ALGORITHM==========")
+            # self.pretty_print(self.results[1])
 
-        if "standard_aco" in algorithms:
+        if "standard" in algorithms:
             standard_as1 = StandardAntAlgorithm(self.graph, self.ant_count, max_iterations=self.max_iterations,
                                                 rho=self.rho, exp_seed=self.exp_seed, alpha=self.alpha_ant,
                                                 beta=self.beta_ant)
             self.results[2] = standard_as1.execute()
-            print("==========ORIGINAL ANT COLONY OPTIMIZATION==========")
-            self.pretty_print(self.results[2])
+            # print("==========ORIGINAL ANT COLONY OPTIMIZATION==========")
+            # self.pretty_print(self.results[2])
 
-        if "elitist_aco" in algorithms:
+        if "elitist" in algorithms:
             elitist_as1 = ElitistAntAlgorithm(self.graph, self.ant_count, max_iterations=self.max_iterations,
                                               rho=self.rho,
                                               exp_seed=self.exp_seed, alpha=self.alpha_ant, beta=self.beta_ant)
             self.results[3] = elitist_as1.execute()
-            print("==========ELITIST ANT COLONY OPTIMIZATION==========")
-            self.pretty_print(self.results[3])
+            # print("==========ELITIST ANT COLONY OPTIMIZATION==========")
+            # self.pretty_print(self.results[3])
 
-        if "rank_aco" in algorithms:
+        if "rank" in algorithms:
             rank_as1 = RankAntAlgorithm(self.graph, self.ant_count, chosen_ants_count=self.chosen_ants_count,
                                         max_iterations=self.max_iterations, rho=self.rho, exp_seed=self.exp_seed,
                                         alpha=self.alpha_ant, beta=self.beta_ant)
             self.results[4] = rank_as1.execute()
-            print("==========RANK ANT COLONY OPTIMIZATION==========")
-            self.pretty_print(self.results[4])
+            # print("==========RANK ANT COLONY OPTIMIZATION==========")
+            # self.pretty_print(self.results[4])
 
         if "pso" in algorithms:
             pso_1 = Pso_Algorithm(self.graph, alpha=self.alpha, beta=self.beta, gamma=self.gamma,
                                   particle_count=self.ant_count, max_iterations=self.max_iterations,
                                   exp_seed=self.exp_seed)
             self.results[5] = pso_1.execute()
-            print("==========PARTICLE SWARM OPTIMIZATION==========")
-            self.pretty_print(self.results[5])
+            # print("==========PARTICLE SWARM OPTIMIZATION==========")
+            # self.pretty_print(self.results[5])
         self.write_row()
