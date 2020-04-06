@@ -16,17 +16,19 @@ algorithms = ["standard", "elitist"]
 # algorithms = ["pso"]
 files = ["E-n22-k4.txt", "E-n33-k4.txt", "E-n51-k5.txt", "E-n76-k8.txt", "E-n76-k10.txt", "E-n101-k8.txt",
          "E-n101-k14.txt"]
-ant_counts = [50, 100, 200]
-max_iterations_list = [30, 100, 150]
+ant_counts = [200]
+max_iterations_list = [50]
 seeds = [6666, 7777, 8888]
-rhos = [0, 0.3, 0.7]
-alphas_ant = [0.4, 0.8, 1]
-betas_ant = [0.4, 0.8, 1]
+
+rhos = [0]
+alphas_ant = [10]
+betas_ant = [4]
+
 chosen_ant_percents = [0.02, 0.1, 0.2]
 
-alphas_pso = [0.4, 0.8, 1]
-betas_pso = [0.4, 0.8, 1]
-gammas_pso = [0.3, 0.7]
+alphas_pso = [0.55, 0.85]
+betas_pso = [0.55, 0.85]
+gammas_pso = [0, 0.5, 1]
 
 counter = 0
 for file in files:
