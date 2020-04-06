@@ -1,14 +1,34 @@
-from itertools import product
-from test_class import Test
 import csv
+from itertools import product
+from datetime import datetime
+
+from test_class import Test
 
 
 def create_file(path):
     with open(path, 'w', newline='') as csvfile:
-        csv_writer = csv.writer(csvfile, delimiter=' ',
+        csv_writer = csv.writer(csvfile, delimiter=',',
                                 quotechar='|', quoting=csv.QUOTE_MINIMAL)
         csv_writer.writerow(
-            ["it", "ant_count", "alpha_ant", "beta_ant", "greedy", "random", "standard", "rank", "elit", "pso"])
+            ["ALG_NAME", "ANT_COUNT", "MAX_IT", "SEED", "ALPHA_ANT", "BETA_ANT", "RHO", "CHOSEN_ANTS", "ALPHA_PSO",
+             "BETA_PSO", "GAMMA", "SCORE"])
+
+
+def run_algorithms(_algorithms):
+    counter = 0
+    for file in files:
+        now = datetime.now()
+        result_filename = f"res_{file}_{'_'.join(_algorithms)}_{now.hour}{now.minute}{now.second}.txt"
+        create_file(result_filename)
+        for exp_seed, max_iterations, ant_count, alpha_ant, beta_ant, rho in product(seeds, max_iterations_list,
+                                                                                     ant_counts, alphas_ant, betas_ant,
+                                                                                     rhos):
+            Test("E-n22-k4.txt", max_iterations=max_iterations, ant_count=ant_count,
+                 chosen_ants_count=None, alpha=None, beta=None,
+                 gamma=None, rho=rho, exp_seed=exp_seed, alpha_ant=alpha_ant, beta_ant=beta_ant).run(
+                path=result_filename, algorithms=_algorithms)
+            counter += 1
+            print(f"{counter}) {file}_s{exp_seed}_its{max_iterations}_ants{ant_count}_a{alpha_ant}_b{beta_ant}_r{rho}")
 
 
 algorithms = ["standard", "elitist"]
@@ -30,19 +50,7 @@ alphas_pso = [0.55, 0.85]
 betas_pso = [0.55, 0.85]
 gammas_pso = [0, 0.5, 1]
 
-counter = 0
-for file in files:
-    result_filename = f"res_{file}_{'_'.join(algorithms)}.txt"
-    create_file(result_filename)
-    for exp_seed, max_iterations, ant_count, alpha_ant, beta_ant, rho in product(seeds, max_iterations_list,
-                                                                                 ant_counts, alphas_ant, betas_ant,
-                                                                                 rhos):
-        Test("E-n22-k4.txt", max_iterations=max_iterations, ant_count=ant_count,
-             chosen_ants_count=None, alpha=None, beta=None,
-             gamma=None, rho=rho, exp_seed=exp_seed, alpha_ant=alpha_ant, beta_ant=beta_ant).run(
-            path=result_filename, algorithms=algorithms)
-        counter += 1
-        print(f"{counter}) {file}_s{exp_seed}_its{max_iterations}_ants{ant_count}_a{alpha_ant}_b{beta_ant}_r{rho}")
+run_algorithms(algorithms)
 
 # alpha 0.55
 # beta =0.85
