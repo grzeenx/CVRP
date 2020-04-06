@@ -11,8 +11,9 @@ import csv
 
 
 class Test:
-    def __init__(self, graph_path, max_iterations, ant_count, chosen_ants_count, alpha, beta, gamma, rho, exp_seed,
-                 alpha_ant, beta_ant):
+    def __init__(self, graph_path=None, max_iterations=None, ant_count=None, chosen_ants_count=None, alpha=None,
+                 beta=None, gamma=None, rho=None, exp_seed=None,
+                 alpha_ant=None, beta_ant=None):
         dataset_path = os.path.join(pathlib.Path().absolute(), "dataset")
         self.graph = Graph.load_graph(graph_path, dataset_path)
         self.max_iterations = max_iterations
@@ -64,48 +65,48 @@ class Test:
                    self.rho, self.chosen_ants_count, self.alpha, self.beta, self.gamma, round(self.result[1], 2)]
             csv_writer.writerow(row)
 
-    def run(self, algorithms, path=None, print_iterations=False):
+    def run(self, algorithm, path=None, print_iterations=False):
         """
         Runs the algorithms and saves the result in the csv file
-        :param algorithms: which algorithms should be run
+        :param algorithm: which algorithms should be run
         :param path: path to save the csv. default is result.csv
         :param print_iterations: NOT IMPLEMENTED
         """
         if path is not None:
             self.path_to_csv = path
 
-        if "greedy" in algorithms:
+        if algorithm == "greedy":
             greedy_1 = GreedyAlgorithm(self.graph)
             self.result = greedy_1.greedy()
             self.write_row("greedy")
 
-        if "random" in algorithms:
+        elif algorithm == "random":
             random_1 = Random_algorithm(self.graph, self.exp_seed)
             self.result = random_1.greedy()
             self.write_row("random")
 
-        if "standard" in algorithms:
+        elif algorithm == "standard":
             standard_as1 = StandardAntAlgorithm(self.graph, self.ant_count, max_iterations=self.max_iterations,
                                                 rho=self.rho, exp_seed=self.exp_seed, alpha=self.alpha_ant,
                                                 beta=self.beta_ant)
             self.result = standard_as1.execute()
             self.write_row("standard")
 
-        if "elitist" in algorithms:
+        elif algorithm == "elitist":
             elitist_as1 = ElitistAntAlgorithm(self.graph, self.ant_count, max_iterations=self.max_iterations,
                                               rho=self.rho,
                                               exp_seed=self.exp_seed, alpha=self.alpha_ant, beta=self.beta_ant)
             self.result = elitist_as1.execute()
             self.write_row("elitist")
 
-        if "rank" in algorithms:
+        elif algorithm == "rank":
             rank_as1 = RankAntAlgorithm(self.graph, self.ant_count, chosen_ants_count=self.chosen_ants_count,
                                         max_iterations=self.max_iterations, rho=self.rho, exp_seed=self.exp_seed,
                                         alpha=self.alpha_ant, beta=self.beta_ant)
             self.result = rank_as1.execute()
             self.write_row("rank")
 
-        if "pso" in algorithms:
+        elif algorithm == "pso":
             pso_1 = Pso_Algorithm(self.graph, alpha=self.alpha, beta=self.beta, gamma=self.gamma,
                                   particle_count=self.ant_count, max_iterations=self.max_iterations,
                                   exp_seed=self.exp_seed)
