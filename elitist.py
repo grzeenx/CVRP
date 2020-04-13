@@ -8,7 +8,7 @@ class ElitistAntAlgorithm(StandardAntAlgorithm):
         super().__init__(graph, ants_count, max_iterations, alpha, beta, rho,exp_seed=exp_seed)
         self.best_ant_count = 0
 
-    def perform_iteration_for_all_ants(self):
+    def perform_iteration_for_all_ants(self, iteration):
         new_pheromones = np.ones((self.graph.dimension, self.graph.dimension))
         for ant in self.ants:
             route, cost = ant.perform_iteration()
@@ -17,6 +17,7 @@ class ElitistAntAlgorithm(StandardAntAlgorithm):
                 self.best_cost = cost
                 self.best_route = route
                 self.best_ant_count = 1
+                self.iteration_best_occured = iteration
             elif cost == self.best_cost:
                 self.best_ant_count += 1
         self.evaporate_pheromones()

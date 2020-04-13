@@ -1,7 +1,6 @@
 from random import shuffle, random, seed
 
 
-
 class Particle:
     '''
     Class that keeps the particle information
@@ -27,16 +26,9 @@ class Particle:
         # sequence of swaps
         self.velocity = []
 
-    # def set_route_without_base(self, route_without_base):
-    #     self.route_without_base = route_without_base
-
     def set_gbest(self, gbest, gbest_cost):
         self.gbest_cost = gbest_cost
         self.gbest = gbest
-
-    #
-    # def set_pbest(self, pbest):
-    #     self.pbest = pbest.copy()
 
     def do_swaps(self):
         for swap in self.velocity:
@@ -76,7 +68,7 @@ class Particle:
 
 
 class Pso_Algorithm:
-    def __init__(self, graph, alpha=0.85, beta=0.85, gamma=0, particle_count=10, max_iterations=10, exp_seed = 777):
+    def __init__(self, graph, alpha=0.85, beta=0.85, gamma=0, particle_count=10, max_iterations=10, exp_seed=777):
         '''
         Class that realises PSO algorithm.
         :param graph:
@@ -97,22 +89,18 @@ class Pso_Algorithm:
         self.gbest_cost = count_cost(self.gbest, self.graph)[0]
         self.particles = [
             Particle(self.graph, self.gbest, self.gbest_cost, self.alpha, self.beta, self.gamma, self.graph.depot_index)
-            for i
-            in
-            range(self.particle_count)]
+            for i in range(self.particle_count)]
         self.max_iterations = max_iterations
+
+        self.iteration_best_occured = 0
 
     def execute(self):
         for i in range(self.max_iterations):
-            self.perform_iteration_for_all_particles()
-            # print(f"{i} {self.gbest_cost}")
-            # for particle in self.particles:
-            #     print(particle.pbest_cost, end=" ")
-            # print(" ")
-        _, route_with_zeroes =count_cost(self.gbest, self.graph)
-        return route_with_zeroes, self.gbest_cost
+            self.perform_iteration_for_all_particles(i)
+        _, route_with_zeroes = count_cost(self.gbest, self.graph)
+        return route_with_zeroes, self.gbest_cost, self.iteration_best_occured
 
-    def perform_iteration_for_all_particles(self):
+    def perform_iteration_for_all_particles(self, iteration):
         gbest_changed = False
         for particle in self.particles:
             cost, route = particle.move()
@@ -120,6 +108,7 @@ class Pso_Algorithm:
                 gbest_changed = True
                 self.gbest_cost = cost
                 self.gbest = route.copy()
+                self.iteration_best_occured = iteration
         if gbest_changed:
             self.update_gbest()
 
@@ -155,6 +144,5 @@ def count_cost(route, graph):
             current_load = demand
             current_vertex = vertex
 
-    current_cost+=graph.edges[current_vertex, graph.depot_index]
+    current_cost += graph.edges[current_vertex, graph.depot_index]
     return current_cost, route_with_zeroes
-

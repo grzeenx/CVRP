@@ -5,11 +5,11 @@ import math
 class RankAntAlgorithm(StandardAntAlgorithm):
     def __init__(self, graph, ants_count, chosen_ants_count, max_iterations=50, alpha=1, beta=1, rho=0, exp_seed=777):
 
-        super().__init__(graph, ants_count, max_iterations, alpha, beta, rho,exp_seed=exp_seed)
+        super().__init__(graph, ants_count, max_iterations, alpha, beta, rho, exp_seed=exp_seed)
         self.chosen_ants_count = chosen_ants_count
         self.best_costs_and_routes = [(math.inf, [[]])]
 
-    def perform_iteration_for_all_ants(self):
+    def perform_iteration_for_all_ants(self, iteration):
         for ant in self.ants:
             route, cost = ant.perform_iteration()
             if cost < self.best_costs_and_routes[-1][0]:
@@ -23,6 +23,7 @@ class RankAntAlgorithm(StandardAntAlgorithm):
         if self.best_costs_and_routes[0][0] < self.best_cost:
             self.best_cost = self.best_costs_and_routes[0][0]
             self.best_route = self.best_costs_and_routes[0][1]
+            self.iteration_best_occured = iteration
         self.best_costs_and_routes = [(math.inf, [[]])]
 
     def place_best_pheromones(self):

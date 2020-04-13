@@ -13,7 +13,7 @@ def create_file(path):
                                 quotechar='|', quoting=csv.QUOTE_MINIMAL)
         csv_writer.writerow(
             ["ALG_NAME", "ANT_COUNT", "MAX_IT", "SEED", "ALPHA_ANT", "BETA_ANT", "RHO", "CHOSEN_ANTS", "ALPHA_PSO",
-             "BETA_PSO", "GAMMA", "SCORE"])
+             "BETA_PSO", "GAMMA", "SCORE", "TIME [s]", "ITERATION OF BEST"])
 
 
 def print_estimated_iteration_counter():
@@ -44,9 +44,9 @@ def print_and_increment_counter():
     counter += 1
 
 
-def iterate_over(algorithm, file):
+def iterate_over(algorithm, file, id=""):
     now = datetime.now()
-    result_filename = f"res_{file}_{algorithm}_{now.hour}{now.minute}{now.second}.txt"
+    result_filename = f"res_{id}_{file}_{algorithm}_{now.hour}{now.minute}{now.second}.txt"
     create_file(result_filename)
 
     if algorithm == "greedy":
@@ -100,42 +100,51 @@ def iterate_over(algorithm, file):
                 f"{algorithm} {file}_s{exp_seed}_its{max_iterations}_ants{ant_count}_a{alpha_pso}_b{beta_pso}_g{gamma}")
 
 
-def run_algorithms(_algorithms):
+def run_algorithms(_algorithms, id=""):
     print_estimated_iteration_counter()
     for file in files:
         for algorithm in _algorithms:
-            iterate_over(algorithm, file)
+            iterate_over(algorithm, file, id=id)
 
 
-algorithms = ["greedy", "random", "standard", "elitist", "rank", "pso"]
-# algorithms = ["standard", "elitist"]
-# algorithms = ["rank"]
-# algorithms = ["pso"]
-files = ["E-n22-k4.txt", "E-n33-k4.txt", "E-n51-k5.txt", "E-n76-k8.txt", "E-n76-k10.txt", "E-n101-k8.txt",
-         "E-n101-k14.txt"]
-ant_counts = [200]
-max_iterations_list = [50]
-seeds = [6666, 7777, 8888]
+files = ["E-n51-k5.txt", "E-n76-k8.txt", "E-n101-k14.txt"]
+# files = ["E-n22-k4.txt", "E-n33-k4.txt", "E-n51-k5.txt", "E-n76-k8.txt", "E-n76-k10.txt", "E-n101-k8.txt",
+#          "E-n101-k14.txt"]
 
+
+seeds = [6666, 7777, 8888, 9213]
+#parameters of the algorithms - constant for the experiments
 rhos = [0]
 alphas_ant = [10]
 betas_ant = [4]
+chosen_ant_percents = [0.2]
+alphas_pso = [0.85]
+betas_pso = [0.55]
+gammas_pso = [0.5]
+ant_counts = [200]
 
-chosen_ant_percents = [0.02, 0.1, 0.2]
+# H1
+algorithms = ["greedy", "standard", "elitist", "rank"]
+max_iterations_list = [50]
+run_algorithms(algorithms, id="H1")
 
-alphas_pso = [0.55, 0.85]
-betas_pso = [0.55, 0.85]
-gammas_pso = [0, 0.5, 1]
+# H2
+algorithms = ["standard", "elitist", "rank", "pso"]
+max_iterations_list = [200]
+run_algorithms(algorithms, id="H2")
 
-run_algorithms(algorithms)
+#H3
 
-# alpha 0.55
-# beta =0.85
-# ants_count, max_iterations=50, alpha=1, beta=1, rho=0
-#
-# self, graph, ants_count, chosen_ants_count, max_iterations=50, alpha=1, beta=1, rho=0
-#
-# ants_count, max_iterations=50, alpha=1, beta=1, rho=0
-#
-#
-# alpha=0.85, beta=0.85, gamma=0, particle_count=10, max_iterations=10
+algorithms = ["greedy", "random","standard", "elitist", "rank", "pso"]
+max_iterations_list = [100]
+run_algorithms(algorithms, id="H3")
+
+#H4
+
+algorithms = ["greedy", "random","standard", "elitist", "rank", "pso"]
+max_iterations_list = [150]
+run_algorithms(algorithms, id="H4")
+
+#H5
+# zapusci sie jak sie zobaczy, w której iteracji te algorytmy osiagna taki co greedy wynik, i ten co szybciej zmierzy mu sie czas
+# # run_algorithms(algorithms)

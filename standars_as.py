@@ -98,6 +98,7 @@ class StandardAntAlgorithm:
         self.iteration_count = 0
         self.ants = []
         self.initialize_ants()
+        self.iteration_best_occured = 0
 
     def initialize_ants(self):
         self.ants = []
@@ -106,12 +107,12 @@ class StandardAntAlgorithm:
 
     def execute(self):
         for i in range(self.max_iterations):
-            self.perform_iteration_for_all_ants()
+            self.perform_iteration_for_all_ants(i)
             self.initialize_ants()
         self.best_cost += self.graph.edges[self.best_route[-1][-1], self.graph.depot_index]
-        return self.best_route, self.best_cost
+        return self.best_route, self.best_cost, self.iteration_best_occured
 
-    def perform_iteration_for_all_ants(self):
+    def perform_iteration_for_all_ants(self, iteration):
         new_pheromones = np.ones((self.graph.dimension, self.graph.dimension))
         for ant in self.ants:
             route, cost = ant.perform_iteration()
@@ -119,6 +120,7 @@ class StandardAntAlgorithm:
             if cost < self.best_cost:
                 self.best_cost = cost
                 self.best_route = route
+                self.iteration_best_occured=iteration
         self.evaporate_pheromones()
         self.place_pheromones(new_pheromones)
 

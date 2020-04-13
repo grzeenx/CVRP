@@ -8,6 +8,7 @@ from rank import RankAntAlgorithm
 from pso import Pso_Algorithm
 from random_algorithm import Random_algorithm
 import csv
+import time
 
 
 class Test:
@@ -30,7 +31,7 @@ class Test:
         self.result = None
 
     def pretty_print(self, _result):
-        route, cost = _result
+        route, cost, iteration_of_best = _result
         # for i, cycle in enumerate(route):
         #     vertices_as_text = ""
         #     for vertex in cycle:
@@ -62,53 +63,76 @@ class Test:
             csv_writer = csv.writer(csvfile, delimiter=',',
                                     quotechar='|', quoting=csv.QUOTE_MINIMAL)
             row = [algorithm_name, self.ant_count, self.max_iterations, self.exp_seed, self.alpha_ant, self.beta_ant,
-                   self.rho, self.chosen_ants_count, self.alpha, self.beta, self.gamma, round(self.result[1], 2)]
+                   self.rho, self.chosen_ants_count, self.alpha, self.beta, self.gamma, round(self.result[1], 2), round(self.time_in_seconds,10), self.result[2]]
             csv_writer.writerow(row)
 
     def run(self, algorithm, path=None, print_iterations=False):
         """
-        Runs the algorithms and saves the result in the csv file
+        Runs the algorithms and saves the result in the csv file and measures the time of execution.
         :param algorithm: which algorithms should be run
         :param path: path to save the csv. default is result.csv
         :param print_iterations: NOT IMPLEMENTED
         """
+        #time measuring
+        start, end = 0., 0.
+
         if path is not None:
             self.path_to_csv = path
 
         if algorithm == "greedy":
+            start = time.time()
             greedy_1 = GreedyAlgorithm(self.graph)
-            self.result = greedy_1.greedy()
+            self.result = greedy_1.execute()
+            end = time.time()
+            self.time_in_seconds = end - start
             self.write_row("greedy")
 
         elif algorithm == "random":
+            start = time.time()
             random_1 = Random_algorithm(self.graph, self.exp_seed)
-            self.result = random_1.greedy()
+            self.result = random_1.execute()
+            end = time.time()
+            self.time_in_seconds = end - start
             self.write_row("random")
 
         elif algorithm == "standard":
+            start = time.time()
             standard_as1 = StandardAntAlgorithm(self.graph, self.ant_count, max_iterations=self.max_iterations,
                                                 rho=self.rho, exp_seed=self.exp_seed, alpha=self.alpha_ant,
                                                 beta=self.beta_ant)
             self.result = standard_as1.execute()
+            end = time.time()
+            self.time_in_seconds = end - start
             self.write_row("standard")
 
         elif algorithm == "elitist":
+            start = time.time()
             elitist_as1 = ElitistAntAlgorithm(self.graph, self.ant_count, max_iterations=self.max_iterations,
                                               rho=self.rho,
                                               exp_seed=self.exp_seed, alpha=self.alpha_ant, beta=self.beta_ant)
             self.result = elitist_as1.execute()
+            end = time.time()
+            self.time_in_seconds = end - start
             self.write_row("elitist")
 
         elif algorithm == "rank":
+            start = time.time()
+
             rank_as1 = RankAntAlgorithm(self.graph, self.ant_count, chosen_ants_count=self.chosen_ants_count,
                                         max_iterations=self.max_iterations, rho=self.rho, exp_seed=self.exp_seed,
                                         alpha=self.alpha_ant, beta=self.beta_ant)
             self.result = rank_as1.execute()
+            end = time.time()
+            self.time_in_seconds = end - start
             self.write_row("rank")
 
         elif algorithm == "pso":
+            start = time.time()
             pso_1 = Pso_Algorithm(self.graph, alpha=self.alpha, beta=self.beta, gamma=self.gamma,
                                   particle_count=self.ant_count, max_iterations=self.max_iterations,
                                   exp_seed=self.exp_seed)
+
             self.result = pso_1.execute()
+            end = time.time()
+            self.time_in_seconds = end - start
             self.write_row("pso")
