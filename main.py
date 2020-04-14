@@ -124,7 +124,7 @@ gammas_pso = [0.5]
 ant_counts = [200]
 
 # H1
-algorithms = ["greedy", "standard", "elitist", "rank"]
+algorithms = ["greedy", "random", "standard", "elitist", "rank"]
 max_iterations_list = [50]
 run_algorithms(algorithms, id="H1")
 
