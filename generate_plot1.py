@@ -74,7 +74,7 @@ threshold_round101 = 1130
 # ============== H1 (50)
 # ===== n51
 elitist_average = 629.405
-pso_average = 9999
+pso_average = 1048.8225
 greedy_average = 711.5
 random_average = 1759.8025
 standard_average = 622.3425
@@ -85,7 +85,7 @@ plt1 = make_chart(averages, threshold51, 'n51', 'H1_n51')
 
 # ===== n76
 elitist_average = 982.28
-pso_average = 9999
+pso_average = 1630.3249999999998
 greedy_average = 1149.41
 random_average = 2553.8775000000005
 standard_average = 985.1675
@@ -96,7 +96,7 @@ plt2 = make_chart(averages, threshold76, 'n76', 'H1_n76')
 
 # === n101
 elitist_average = 1471.905
-pso_average = 9999
+pso_average = 2575.815
 greedy_average = 1610.91
 random_average = 3605.4575
 standard_average = 1477.9399999999998
@@ -202,3 +202,35 @@ plt3 = make_chart(averages, threshold101, 'n101', 'H4_n101')
 # plt3.show()
 
 # ======= H5
+# ===== n51
+elitist_average = 614.1875
+pso_average = 1048.295
+greedy_average = 711.5
+random_average = 1759.8025
+standard_average = 615.9625000000001
+rank_average = 612.4725000000001
+averages = [greedy_average, standard_average, elitist_average, rank_average, pso_average, random_average]
+plt1 = make_chart(averages, threshold51, 'n51', 'H5_n51')
+# plt1.show()
+
+# ===== n76
+elitist_average = 961.885
+pso_average = 1630.3249999999998
+greedy_average = 1149.41
+random_average = 2553.8775000000005
+standard_average = 956.5274999999999
+rank_average = 888.875
+averages = [greedy_average, standard_average, elitist_average, rank_average, pso_average, random_average]
+plt2 = make_chart(averages, threshold76, 'n76', 'H5_n76')
+# plt2.show()
+
+# === n101
+elitist_average = 1445.7775000000001
+pso_average = 2575.815
+greedy_average = 1610.91
+random_average = 3605.4575
+standard_average = 1447.135
+rank_average = 1348.79
+averages = [greedy_average, standard_average, elitist_average, rank_average, pso_average, random_average]
+plt3 = make_chart(averages, threshold101, 'n101', 'H5_n101')
+# plt3.show()
