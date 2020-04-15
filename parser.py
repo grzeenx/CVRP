@@ -73,7 +73,7 @@ def make_average_for_graph(graph):
         data = n101s
     for alg in algs:
         for it in its:
-            filename = f"av_{alg}_{it}.txt"
+            filename = f"av_n{graph}_{alg}_{it}.txt"
             av_score = 0
             av_time = 0
             av_best_it = 0
@@ -82,11 +82,9 @@ def make_average_for_graph(graph):
             else:
                 rows = list(filter(lambda x: x['alg'] == str(alg), data))
             if not rows:
-                break
-
+                continue
             if alg != 'greedy':
                 for i in range(len(seeds)):
-                    print(rows[i])
                     av_score += float(rows[i]['score'])
                     av_time += float(rows[i]['time'])
                     av_best_it += int(rows[i]['best_it'])
@@ -99,3 +97,5 @@ def make_average_for_graph(graph):
 
 
 make_average_for_graph('51')
+make_average_for_graph('76')
+make_average_for_graph('101')
