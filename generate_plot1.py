@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import matplotlib.transforms as transforms
 import numpy as np
+from matplotlib import gridspec
 
 
 def make_chart(avs, thr, n, chartname):
@@ -46,11 +47,11 @@ def make_chart(avs, thr, n, chartname):
 
     plt.title(n)
     # plt.show()
-    # fig.savefig(f"{chartname}.png")
+    fig.savefig(f"{chartname}.png")
     return plt
 
 
-def make_subplots(*args):
+def make_subplots(plt1, plt2, plt3, name):
     pass
 
 
@@ -130,7 +131,7 @@ pso_average = 2575.815
 standard_average = 1428.4875
 rank_average = 1344.1599999999999
 averages = [None, standard_average, elitist_average, rank_average, pso_average, None]
-plt3 = make_chart(averages, threshold101, 'n76', 'H2_n76')
+plt3 = make_chart(averages, threshold101, 'n76', 'H2_n101')
 # plt3.show()
 
 # =========== H3
@@ -203,34 +204,35 @@ plt3 = make_chart(averages, threshold101, 'n101', 'H4_n101')
 
 # ======= H5
 # ===== n51
-elitist_average = 614.1875
-pso_average = 1048.295
-greedy_average = 711.5
-random_average = 1759.8025
-standard_average = 615.9625000000001
-rank_average = 612.4725000000001
-averages = [greedy_average, standard_average, elitist_average, rank_average, pso_average, random_average]
-plt1 = make_chart(averages, threshold51, 'n51', 'H5_n51')
-# plt1.show()
+# elitist_average = 614.1875
+# pso_average = 1048.295
+# greedy_average = 711.5
+# random_average = 1759.8025
+# standard_average = 615.9625000000001
+# rank_average = 612.4725000000001
+# averages = [greedy_average, standard_average, elitist_average, rank_average, pso_average, random_average]
+# plt1 = make_chart(averages, threshold51, 'n51', 'H5_n51')
+# # plt1.show()
+#
+# # ===== n76
+# elitist_average = 961.885
+# pso_average = 1630.3249999999998
+# greedy_average = 1149.41
+# random_average = 2553.8775000000005
+# standard_average = 956.5274999999999
+# rank_average = 888.875
+# averages = [greedy_average, standard_average, elitist_average, rank_average, pso_average, random_average]
+# plt2 = make_chart(averages, threshold76, 'n76', 'H5_n76')
+# # plt2.show()
+#
+# # === n101
+# elitist_average = 1445.7775000000001
+# pso_average = 2575.815
+# greedy_average = 1610.91
+# random_average = 3605.4575
+# standard_average = 1447.135
+# rank_average = 1348.79
+# averages = [greedy_average, standard_average, elitist_average, rank_average, pso_average, random_average]
+# plt3 = make_chart(averages, threshold101, 'n101', 'H5_n101')
+# # plt3.show()
 
-# ===== n76
-elitist_average = 961.885
-pso_average = 1630.3249999999998
-greedy_average = 1149.41
-random_average = 2553.8775000000005
-standard_average = 956.5274999999999
-rank_average = 888.875
-averages = [greedy_average, standard_average, elitist_average, rank_average, pso_average, random_average]
-plt2 = make_chart(averages, threshold76, 'n76', 'H5_n76')
-# plt2.show()
-
-# === n101
-elitist_average = 1445.7775000000001
-pso_average = 2575.815
-greedy_average = 1610.91
-random_average = 3605.4575
-standard_average = 1447.135
-rank_average = 1348.79
-averages = [greedy_average, standard_average, elitist_average, rank_average, pso_average, random_average]
-plt3 = make_chart(averages, threshold101, 'n101', 'H5_n101')
-# plt3.show()
