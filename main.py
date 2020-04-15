@@ -44,7 +44,7 @@ def print_and_increment_counter():
     counter += 1
 
 
-def iterate_over(algorithm, file, id=""):
+def iterate_over(algorithm, file, id="", to_result = None):
     now = datetime.now()
     result_filename = f"res_{id}_{file}_{algorithm}_{now.hour}{now.minute}{now.second}.txt"
     create_file(result_filename)
@@ -65,7 +65,7 @@ def iterate_over(algorithm, file, id=""):
                                                                                      ant_counts, alphas_ant, betas_ant,
                                                                                      rhos):
             Test(graph_path=file, max_iterations=max_iterations, ant_count=ant_count, rho=rho, exp_seed=exp_seed,
-                 alpha_ant=alpha_ant, beta_ant=beta_ant).run(path=result_filename, algorithm=algorithm)
+                 alpha_ant=alpha_ant, beta_ant=beta_ant).run(path=result_filename, algorithm=algorithm, to_result=to_result)
             print_and_increment_counter()
             print(
                 f"{algorithm} {file}_s{exp_seed}_its{max_iterations}_ants{ant_count}_a{alpha_ant}_b{beta_ant}_r{rho}")
@@ -80,7 +80,7 @@ def iterate_over(algorithm, file, id=""):
                                                                                                          chosen_ant_percents):
             Test(graph_path=file, max_iterations=max_iterations, ant_count=ant_count, rho=rho, exp_seed=exp_seed,
                  alpha_ant=alpha_ant, beta_ant=beta_ant, chosen_ants_count=round(ant_count * chosen_ant_percent)).run(
-                path=result_filename, algorithm=algorithm)
+                path=result_filename, algorithm=algorithm, to_result=to_result)
             print_and_increment_counter()
             print(
                 f"{algorithm} {file}_s{exp_seed}_its{max_iterations}_ants{ant_count}_a{alpha_ant}_b{beta_ant}_r{rho}_chosen{chosen_ant_percent}")
@@ -94,17 +94,20 @@ def iterate_over(algorithm, file, id=""):
                                                                                        gammas_pso
                                                                                        ):
             Test(graph_path=file, max_iterations=max_iterations, ant_count=ant_count, gamma=gamma, exp_seed=exp_seed,
-                 alpha=alpha_pso, beta=beta_pso).run(path=result_filename, algorithm=algorithm)
+                 alpha=alpha_pso, beta=beta_pso).run(path=result_filename, algorithm=algorithm, to_result=to_result)
             print_and_increment_counter()
             print(
                 f"{algorithm} {file}_s{exp_seed}_its{max_iterations}_ants{ant_count}_a{alpha_pso}_b{beta_pso}_g{gamma}")
 
 
-def run_algorithms(_algorithms, id=""):
+def run_algorithms(_algorithms, id="", to_results=None):
     print_estimated_iteration_counter()
-    for file in files:
+    for i, file in enumerate(files):
         for algorithm in _algorithms:
-            iterate_over(algorithm, file, id=id)
+            to_result = None
+            if to_results is not None:
+                to_result = to_results[i]
+            iterate_over(algorithm, file, id=id, to_result=to_result)
 
 
 files = ["E-n51-k5.txt", "E-n76-k8.txt", "E-n101-k14.txt"]
@@ -113,7 +116,7 @@ files = ["E-n51-k5.txt", "E-n76-k8.txt", "E-n101-k14.txt"]
 
 
 seeds = [6666, 7777, 8888, 9213]
-#parameters of the algorithms - constant for the experiments
+# parameters of the algorithms - constant for the experiments
 rhos = [0]
 alphas_ant = [10]
 betas_ant = [4]
@@ -123,28 +126,37 @@ betas_pso = [0.55]
 gammas_pso = [0.5]
 ant_counts = [200]
 
-# H1
-algorithms = ["greedy", "random", "standard", "elitist", "rank"]
-max_iterations_list = [50]
-run_algorithms(algorithms, id="H1")
+# # H1
+# algorithms = ["greedy", "random", "standard", "elitist", "rank"]
+# max_iterations_list = [50]
+# run_algorithms(algorithms, id="H1")
+#
+# # H2
+# algorithms = ["standard", "elitist", "rank", "pso"]
+# max_iterations_list = [200]
+# run_algorithms(algorithms, id="H2")
+#
+# #H3
+#
+# algorithms = ["greedy", "random","standard", "elitist", "rank", "pso"]
+# max_iterations_list = [100]
+# run_algorithms(algorithms, id="H3")
+#
+# #H4
+#
+# algorithms = ["greedy", "random","standard", "elitist", "rank", "pso"]
+# max_iterations_list = [150]
+# run_algorithms(algorithms, id="H4")
 
-# H2
+
+# dla kazdego algorytmu, dla kazdego datasetu
+# najpierw greedy dla kazdego grafu wyniki i czasy:
+# 51 : (711.5,0.000998497)
+# 76 : (1149.41,0.0009937286)
+# 101 : (1610.91,0.0029630661)
+
+
+# H5
 algorithms = ["standard", "elitist", "rank", "pso"]
 max_iterations_list = [200]
-run_algorithms(algorithms, id="H2")
-
-#H3
-
-algorithms = ["greedy", "random","standard", "elitist", "rank", "pso"]
-max_iterations_list = [100]
-run_algorithms(algorithms, id="H3")
-
-#H4
-
-algorithms = ["greedy", "random","standard", "elitist", "rank", "pso"]
-max_iterations_list = [150]
-run_algorithms(algorithms, id="H4")
-
-#H5
-# zapusci sie jak sie zobaczy, w której iteracji te algorytmy osiagna taki co greedy wynik, i ten co szybciej zmierzy mu sie czas
-# # run_algorithms(algorithms)
+run_algorithms(algorithms, id="H5", to_results=[711.5,1149.41,1610.91])

@@ -66,7 +66,7 @@ class Test:
                    self.rho, self.chosen_ants_count, self.alpha, self.beta, self.gamma, round(self.result[1], 2), round(self.time_in_seconds,10), self.result[2]]
             csv_writer.writerow(row)
 
-    def run(self, algorithm, path=None, print_iterations=False):
+    def run(self, algorithm, path=None, print_iterations=False, to_result=None):
         """
         Runs the algorithms and saves the result in the csv file and measures the time of execution.
         :param algorithm: which algorithms should be run
@@ -99,7 +99,7 @@ class Test:
             start = time.time()
             standard_as1 = StandardAntAlgorithm(self.graph, self.ant_count, max_iterations=self.max_iterations,
                                                 rho=self.rho, exp_seed=self.exp_seed, alpha=self.alpha_ant,
-                                                beta=self.beta_ant)
+                                                beta=self.beta_ant, to_result=to_result)
             self.result = standard_as1.execute()
             end = time.time()
             self.time_in_seconds = end - start
@@ -109,7 +109,7 @@ class Test:
             start = time.time()
             elitist_as1 = ElitistAntAlgorithm(self.graph, self.ant_count, max_iterations=self.max_iterations,
                                               rho=self.rho,
-                                              exp_seed=self.exp_seed, alpha=self.alpha_ant, beta=self.beta_ant)
+                                              exp_seed=self.exp_seed, alpha=self.alpha_ant, beta=self.beta_ant, to_result=to_result)
             self.result = elitist_as1.execute()
             end = time.time()
             self.time_in_seconds = end - start
@@ -120,7 +120,7 @@ class Test:
 
             rank_as1 = RankAntAlgorithm(self.graph, self.ant_count, chosen_ants_count=self.chosen_ants_count,
                                         max_iterations=self.max_iterations, rho=self.rho, exp_seed=self.exp_seed,
-                                        alpha=self.alpha_ant, beta=self.beta_ant)
+                                        alpha=self.alpha_ant, beta=self.beta_ant, to_result=to_result)
             self.result = rank_as1.execute()
             end = time.time()
             self.time_in_seconds = end - start
@@ -130,7 +130,7 @@ class Test:
             start = time.time()
             pso_1 = Pso_Algorithm(self.graph, alpha=self.alpha, beta=self.beta, gamma=self.gamma,
                                   particle_count=self.ant_count, max_iterations=self.max_iterations,
-                                  exp_seed=self.exp_seed)
+                                  exp_seed=self.exp_seed, to_result=to_result)
 
             self.result = pso_1.execute()
             end = time.time()

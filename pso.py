@@ -68,7 +68,8 @@ class Particle:
 
 
 class Pso_Algorithm:
-    def __init__(self, graph, alpha=0.85, beta=0.85, gamma=0, particle_count=10, max_iterations=10, exp_seed=777):
+    def __init__(self, graph, alpha=0.85, beta=0.85, gamma=0, particle_count=10, max_iterations=10, exp_seed=777,
+                 to_result=None):
         '''
         Class that realises PSO algorithm.
         :param graph:
@@ -93,10 +94,13 @@ class Pso_Algorithm:
         self.max_iterations = max_iterations
 
         self.iteration_best_occured = 0
+        self.to_result = to_result
 
     def execute(self):
         for i in range(self.max_iterations):
             self.perform_iteration_for_all_particles(i)
+            if self.to_result is not None and self.gbest_cost <= self.to_result:
+                break
         _, route_with_zeroes = count_cost(self.gbest, self.graph)
         return route_with_zeroes, self.gbest_cost, self.iteration_best_occured
 

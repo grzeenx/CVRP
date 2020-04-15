@@ -3,9 +3,9 @@ import math
 
 
 class RankAntAlgorithm(StandardAntAlgorithm):
-    def __init__(self, graph, ants_count, chosen_ants_count, max_iterations=50, alpha=1, beta=1, rho=0, exp_seed=777):
+    def __init__(self, graph, ants_count, chosen_ants_count, max_iterations=50, alpha=1, beta=1, rho=0, exp_seed=777, to_result=None):
 
-        super().__init__(graph, ants_count, max_iterations, alpha, beta, rho, exp_seed=exp_seed)
+        super().__init__(graph, ants_count, max_iterations, alpha, beta, rho, exp_seed=exp_seed, to_result=to_result)
         self.chosen_ants_count = chosen_ants_count
         self.best_costs_and_routes = [(math.inf, [[]])]
 
