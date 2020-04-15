@@ -4,7 +4,7 @@ import numpy as np
 from matplotlib import gridspec
 
 
-def make_chart(avs, thr, n, chartname):
+def make_chart(avs, thr, n, chartname, roundnr=0):
     labels = ['greedy', 'standard', 'elitist', 'rank', 'pso', 'random']
     if not avs[5]:
         labels.remove('random')
@@ -26,9 +26,16 @@ def make_chart(avs, thr, n, chartname):
         avs.pop(0)
     x = np.arange(len(avs))
     labels = tuple(labels)
-    avs = list(map(lambda _x: round(_x), avs))
+    if roundnr:
+        avs = list(map(lambda _x: round(_x, roundnr), avs))
+    else:
+        avs = list(map(lambda _x: round(_x), avs))
     fig, ax = plt.subplots()
     bar_plot = plt.bar(x, avs, tick_label=avs)
+    if not roundnr:
+        ax.set_ylabel('score')
+    else:
+        ax.set_ylabel('time')
 
     for idx, rect in enumerate(bar_plot):
         height = rect.get_height()
@@ -37,13 +44,14 @@ def make_chart(avs, thr, n, chartname):
                 ha='center', va='bottom', rotation=0)
 
     plt.xticks(x, labels)
-    plt.axhline(y=thr, linewidth=1, color='r')
+    if thr:
+        plt.axhline(y=thr, linewidth=1, color='r')
     # plt.axhline(y=thr_r, linewidth=1, color='k', linestyle='--')
 
-    trans = transforms.blended_transform_factory(
-        ax.get_yticklabels()[0].get_transform(), ax.transData)
-    ax.text(0, thr, "{:.0f}".format(thr), color="red", transform=trans,
-            ha="right", va="center")
+        trans = transforms.blended_transform_factory(
+            ax.get_yticklabels()[0].get_transform(), ax.transData)
+        ax.text(0, thr, "{:.0f}".format(thr), color="red", transform=trans,
+                ha="right", va="center")
 
     plt.title(n)
     # plt.show()
@@ -204,35 +212,32 @@ plt3 = make_chart(averages, threshold101, 'n101', 'H4_n101')
 
 # ======= H5
 # ===== n51
-# elitist_average = 614.1875
-# pso_average = 1048.295
-# greedy_average = 711.5
-# random_average = 1759.8025
-# standard_average = 615.9625000000001
-# rank_average = 612.4725000000001
-# averages = [greedy_average, standard_average, elitist_average, rank_average, pso_average, random_average]
-# plt1 = make_chart(averages, threshold51, 'n51', 'H5_n51')
-# # plt1.show()
-#
-# # ===== n76
-# elitist_average = 961.885
-# pso_average = 1630.3249999999998
-# greedy_average = 1149.41
-# random_average = 2553.8775000000005
-# standard_average = 956.5274999999999
-# rank_average = 888.875
-# averages = [greedy_average, standard_average, elitist_average, rank_average, pso_average, random_average]
-# plt2 = make_chart(averages, threshold76, 'n76', 'H5_n76')
-# # plt2.show()
-#
-# # === n101
-# elitist_average = 1445.7775000000001
-# pso_average = 2575.815
-# greedy_average = 1610.91
-# random_average = 3605.4575
-# standard_average = 1447.135
-# rank_average = 1348.79
-# averages = [greedy_average, standard_average, elitist_average, rank_average, pso_average, random_average]
-# plt3 = make_chart(averages, threshold101, 'n101', 'H5_n101')
-# # plt3.show()
+elitist_average = 0.8374392986
+pso_average = 2.6988471985
+greedy_average = 0.000998497
+standard_average = 0.8084795475
+rank_average = 0.8337893486
+averages = [greedy_average, standard_average, elitist_average, rank_average, pso_average, None]
+plt1 = make_chart(averages, None, 'n51', 'H5_n51', roundnr=4)
+# plt1.show()
+
+# ===== n76
+elitist_average = 1.7742426872
+pso_average = 4.7528014183
+greedy_average = 0.0009937286
+standard_average = 1.7110888958
+rank_average = 1.7187390327
+averages = [greedy_average, standard_average, elitist_average, rank_average, pso_average, None]
+plt2 = make_chart(averages, None, 'n76', 'H5_n76', roundnr=2)
+# plt2.show()
+
+# === n101
+elitist_average = 2.9335999489
+pso_average = 7.2874808311
+greedy_average = 0.0029630661
+standard_average = 2.7759182453
+rank_average = 4.0238661289
+averages = [greedy_average, standard_average, elitist_average, rank_average, pso_average, None]
+plt3 = make_chart(averages, None, 'n101', 'H5_n101', roundnr=1)
+# plt3.show()
 
