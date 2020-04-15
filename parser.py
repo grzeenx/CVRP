@@ -88,10 +88,13 @@ def make_average_for_graph(graph):
                     av_score += float(rows[i]['score'])
                     av_time += float(rows[i]['time'])
                     av_best_it += int(rows[i]['best_it'])
+                av_score /= len(seeds)
+                av_time /= len(seeds)
+                av_best_it //= len(seeds)
             else:
-                av_score += float(rows[0]['score'])
-                av_time += float(rows[0]['time'])
-                av_best_it += int(rows[0]['best_it'])
+                av_score = float(rows[0]['score'])
+                av_time = float(rows[0]['time'])
+                av_best_it = int(rows[0]['best_it'])
             with open(filename, 'w') as file:
                 file.write(f"{av_score},{av_time},{av_best_it}")
 
