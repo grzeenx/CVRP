@@ -1,6 +1,8 @@
-Project created to complete the assignment at the Methods of Artificial Intelligence course.
+#CVRP
+
 Different approaches were tested to solve CVRP (Capacitated Vehicle Routing Problem):
-ACO(different variants), PSO, greedy and random(for comparison purposes). All of the results were put in the report (raport_pl.txt) which is in Polish)
+ACO (different variants), PSO, greedy and random (for comparison purposes). All of the results were put in the report (raport_pl.txt which is in Polish)
 To run the experiments and get the results you should run the main.py script.
 
+Project was created to complete the assignment at the Methods of Artificial Intelligence course.
 
